@@ -1,0 +1,108 @@
+<html>
+    <head>
+        <style>
+            *{
+                padding:0;
+                margin:0;
+                box-sizing:border-box;
+            }
+            body{
+                display:flex;
+                justify-content: center;
+                align-items: center;
+                background-color: aqua;
+            }
+            .stopwatch{
+                width: 300px;
+                height: 150px;
+                background-color: gray;
+                text-align: center;
+                border-radius: 15px;
+                font-size:25px;
+                color:white;
+                box-shadow:0 0 20px #7c7575;
+            }
+            .stopwatch #timeshow{
+                margin-top: 60px;
+            }
+            .buttons{
+                display: flex;
+                justify-content: space-around;
+                margin-top: 15px;
+            }
+            .buttons button{
+                padding:7px;
+                font-size: 16px;
+                border-radius: 5px;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="stopwatch">
+            <div id="timeshow">
+                00 : 00 : 00 : 000
+            </div>
+            <div class="buttons">
+                <button id="start">start</button>
+                <button id="stop">stop</button>
+                <button id="pause">pause</button>
+            </div>
+        </div>
+        <script>
+            let hrs=0,min=0,sec=0,msec=0,h,m,s,ml,timeref;
+            let begin=document.getElementById("start");
+            let timeshow=document.getElementById("timeshow");
+            begin.onclick=function()
+            {
+                timeref=setInterval(updatetime,10);
+            }
+            function updatetime(){
+                msec=msec+10;
+                if(msec==1000)
+                {
+                    sec=sec+1;
+                    msec=0;
+                    if(sec==60)
+                    {
+                        min=min+1;
+                        sec=0;
+                        if(min==60)
+                        {
+                            hrs=hrs+1;
+                            min=0;
+                        }
+                    }
+                }
+                if(hrs<10)
+                h='0'+hrs;
+                else
+                h=hrs;
+                if(min<10)
+                m='0'+min;
+                else
+                m=min;
+                if(sec<10)
+                s='0'+sec;
+                else
+                s=sec;
+                if(msec<10)
+                ml='00'+msec;
+                else if(msec<100)
+                ml='0'+msec;
+                else
+                ml=msec;
+                timeshow.innerHTML=`${h} : ${m} : ${s} : ${ml}`;
+            }
+            let wait=document.getElementById("pause");
+            wait.onclick=function(){
+                clearInterval(timeref);
+            }
+            let end=document.getElementById("stop");
+            end.onclick=function(){
+                clearInterval(timeref);
+                hrs=0,min=0,sec=0,msec=0;
+                timeshow.innerHTML="00 : 00 : 00 : 000";
+            }
+        </script>
+    </body>
+</html>
